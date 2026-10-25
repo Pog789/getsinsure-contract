@@ -73,7 +73,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-300 mb-1">ปีจดทะเบียน (ย้อนหลัง 25 ปี)</label>
+                        <label class="block text-xs text-slate-300 mb-1">ปีจดทะเบียน</label>
                         <select id="sel-year" class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
                             <option value="">-- เลือกปีรถ --</option>
                             <option value="2026">2026 (2569)</option>
@@ -86,22 +86,7 @@
                             <option value="2019">2019 (2562)</option>
                             <option value="2018">2018 (2561)</option>
                             <option value="2017">2017 (2560)</option>
-                            <option value="2016">2016 (2559)</option>
-                            <option value="2015">2015 (2558)</option>
-                            <option value="2014">2014 (2557)</option>
-                            <option value="2013">2013 (2556)</option>
-                            <option value="2012">2012 (2555)</option>
-                            <option value="2011">2011 (2554)</option>
-                            <option value="2010">2010 (2553)</option>
-                            <option value="2009">2009 (2552)</option>
-                            <option value="2008">2008 (2551)</option>
-                            <option value="2007">2007 (2550)</option>
-                            <option value="2006">2006 (2549)</option>
-                            <option value="2005">2005 (2548)</option>
-                            <option value="2004">2004 (2547)</option>
-                            <option value="2003">2003 (2546)</option>
-                            <option value="2002">2002 (2545)</option>
-                            <option value="2001">2001 หรือเก่ากว่า (2544)</option>
+                            <option value="2012">2012 หรือเก่ากว่า</option>
                         </select>
                     </div>
                     <div class="flex items-end">
@@ -124,7 +109,7 @@
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 1 (คุ้มครองครบ)</p>
                             <div class="mt-4 text-2xl font-bold text-blue-600">12,500 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('กรุงเทพประกันภัย ชั้น 1', '12,500')" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
+                        <button onclick="selectPackage('กรุงเทพประกันภัย ชั้น 1', 12500)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
                             เลือกเบี้ยนี้ / ทำสัญญาผ่อน
                         </button>
                     </div>
@@ -137,7 +122,7 @@
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 2+ (มีเงินช่วยเหลือ)</p>
                             <div class="mt-4 text-2xl font-bold text-amber-600">11,700 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('วิริยะประกันภัย ชั้น 2+', '11,700')" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
+                        <button onclick="selectPackage('วิริยะประกันภัย ชั้น 2+', 11700)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
                             เลือกเบี้ยนี้ / ทำสัญญาผ่อน
                         </button>
                     </div>
@@ -148,9 +133,9 @@
                             <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">ประหยัด</span>
                             <h4 class="font-bold text-slate-900 mt-2">วิริยะ / อาคเนย์ประกันภัย</h4>
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 3+</p>
-                            <div class="mt-4 text-2xl font-bold text-emerald-600">11,000 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
+                            <div class="mt-4 text-2xl font-bold text-emerald-600">8,500 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('วิริยะ/อาคเนย์ ชั้น 3+', '11,000')" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
+                        <button onclick="selectPackage('วิริยะ/อาคเนย์ ชั้น 3+', 8500)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition">
                             เลือกเบี้ยนี้ / ทำสัญญาผ่อน
                         </button>
                     </div>
@@ -175,12 +160,52 @@
                     <input type="text" id="selected-plan" value="ยังไม่ได้เลือก (เลือกจากหน้าแรก)" readonly class="w-full bg-slate-100 border p-2.5 rounded-lg text-sm text-slate-600">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">ยอดเงินรวม (บาท)</label>
-                    <input type="text" id="selected-price" value="0" readonly class="w-full bg-slate-100 border p-2.5 rounded-lg text-sm text-slate-600 font-bold">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ยอดเงินประกันตั้งต้น (บาท)</label>
+                    <input type="number" id="base-price" value="0" oninput="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm font-bold bg-slate-50">
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ส่วนลดพิเศษ (บาท)</label>
+                    <input type="number" id="discount-price" value="0" oninput="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm text-red-600 font-bold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ยอดสุทธิหลังหักส่วนลด (บาท)</label>
+                    <input type="text" id="net-price" value="0" readonly class="w-full bg-slate-100 border p-2.5 rounded-lg text-sm text-blue-900 font-bold">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">จำนวนงวดที่ผ่อนชำระ <span id="installment-note" class="text-xs text-rose-500 font-normal"></span></label>
+                    <select id="installment-months" onchange="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm font-bold bg-white text-blue-800">
+                        <option value="1">1 งวด (ชำระเต็มจำนวน)</option>
+                        <option value="3">ผ่อน 3 งวด</option>
+                        <option value="6">ผ่อน 6 งวด</option>
+                        <option value="10">ผ่อน 10 งวด</option>
+                        <option value="12">ผ่อน 12 งวด</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ยอดผ่อนชำระต่อเดือน</label>
+                    <input type="text" id="per-month-price" value="0 บาท/งวด" readonly class="w-full bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-sm text-amber-900 font-bold">
+                </div>
+
+                <!-- ช่องแนบเอกสารและภาพถ่ายรถ -->
+                <div class="md:col-span-2 border-t pt-4 mt-2">
+                    <h3 class="font-bold text-slate-800 mb-3">📁 แนบเอกสารและภาพถ่ายรถยนต์</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 border rounded-xl">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">แนบสำเนาทะเบียนรถ</label>
+                            <input type="file" id="car-reg-file" accept="image/*,.pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                            <p class="text-xs text-slate-400 mt-1">รองรับไฟล์รูปภาพ หรือ PDF</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 border rounded-xl">
+                            <label class="block text-sm font-medium text-slate-700 mb-1">แนบภาพถ่ายรถยนต์ (สูงสุด 9 ภาพ)</label>
+                            <input type="file" id="car-photos" accept="image/*" multiple class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                            <p class="text-xs text-slate-400 mt-1">สามารถเลือกหลายรูปพร้อมกันได้ (ไม่เกิน 9 ภาพ)</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="pt-4">
-                <button onclick="alert('บันทึกข้อมูลสัญญาเรียบร้อย พร้อมส่งลิงก์ให้ลูกค้าตรวจสอบ!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
+                <button onclick="alert('บันทึกข้อมูลสัญญาผ่อนชำระและแนบเอกสารเรียบร้อย พร้อมส่งลิงก์ให้ลูกค้าตรวจสอบ!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
                     💾 บันทึกและสร้างสัญญาผ่อน
                 </button>
             </div>
@@ -226,26 +251,24 @@
     <!-- JavaScript -->
     <script>
         const carModelsData = {
-            "Toyota": ["Yaris", "Yaris Ativ", "Corolla Altis", "Camry", "Vios", "Hilux Revo", "Hilux Vigo", "Fortuner", "Corolla Cross", "C-HR", "Soluna", "Tiger"],
-            "Honda": ["City", "City Hatchback", "Civic", "Accord", "HR-V", "CR-V", "BR-V", "Jazz", "Brio", "Stream"],
-            "Isuzu": ["D-Max", "MU-X", "Dragon Eye", "TFR"],
-            "Mitsubishi": ["Attrage", "Mirage", "Xpander", "Pajero Sport", "Triton", "L200 Cyclone", "Cedia"],
-            "Nissan": ["Almera", "Kicks", "Navara", "Terra", "March", "Sylphy", "Teana", "Sunny"],
-            "Mazda": ["Mazda 2", "Mazda 3", "CX-3", "CX-30", "CX-5", "BT-50", "Mazda 323", "Fighter"],
-            "Ford": ["Ranger", "Everest", "Raptor", "Focus", "Fiesta", "Escape"],
-            "MG": ["MG 3", "MG 5", "MG HS", "MG ZS", "MG EP", "MG4 Electric", "MG Extender"],
+            "Toyota": ["Yaris", "Yaris Ativ", "Corolla Altis", "Camry", "Vios", "Hilux Revo", "Hilux Vigo", "Fortuner", "Corolla Cross", "C-HR"],
+            "Honda": ["City", "City Hatchback", "Civic", "Accord", "HR-V", "CR-V", "BR-V", "Jazz"],
+            "Isuzu": ["D-Max", "MU-X"],
+            "Mitsubishi": ["Attrage", "Mirage", "Xpander", "Pajero Sport", "Triton"],
+            "Nissan": ["Almera", "Kicks", "Navara", "Terra"],
+            "Mazda": ["Mazda 2", "Mazda 3", "CX-3", "CX-30", "CX-5", "BT-50"],
+            "Ford": ["Ranger", "Everest", "Raptor"],
+            "MG": ["MG 3", "MG 5", "MG HS", "MG ZS", "MG EP", "MG4 Electric"],
             "BYD": ["Atto 3", "Dolphin", "Seal", "Sealion 6"],
             "GWM": ["Haval H6", "Haval Jolion", "Ora Good Cat"],
-            "Suzuki": ["Swift", "Ciaz", "Ertiga", "XL7", "Carry", "APV", "Caribian"]
+            "Suzuki": ["Swift", "Ciaz", "Ertiga", "XL7", "Carry"]
         };
 
         function updateCarModels() {
             const brandSelect = document.getElementById('sel-brand');
             const modelSelect = document.getElementById('sel-model');
             const selectedBrand = brandSelect.value;
-
             modelSelect.innerHTML = '<option value="">-- เลือกรุ่นรถ --</option>';
-
             if (selectedBrand && carModelsData[selectedBrand]) {
                 carModelsData[selectedBrand].forEach(model => {
                     const opt = document.createElement('option');
@@ -262,13 +285,67 @@
             const brand = document.getElementById('sel-brand').value;
             const model = document.getElementById('sel-model').value;
             const year = document.getElementById('sel-year').value;
-
             if (!brand || !model || !year) {
                 alert('กรุณาเลือกยี่ห้อ รุ่น และปีจดทะเบียนให้ครบถ้วนครับ');
                 return;
             }
             alert('กำลังค้นหาเบี้ยประกันสำหรับ ' + brand + ' ' + model + ' (ปี ' + year + ')...');
         }
+
+        function selectPackage(planName, price) {
+            document.getElementById('selected-plan').value = planName;
+            document.getElementById('base-price').value = price;
+            calculateInstallment();
+            switchTab('contract');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function calculateInstallment() {
+            const base = parseFloat(document.getElementById('base-price').value) || 0;
+            const discount = parseFloat(document.getElementById('discount-price').value) || 0;
+            const monthsSelect = document.getElementById('installment-months');
+            const noteEl = document.getElementById('installment-note');
+
+            let net = base - discount;
+            if (net < 0) net = 0;
+
+            document.getElementById('net-price').value = net.toLocaleString() + ' บาท';
+
+            let currentMonthVal = parseInt(monthsSelect.value);
+            
+            for (let i = 0; i < monthsSelect.options.length; i++) {
+                let optVal = parseInt(monthsSelect.options[i].value);
+                if (net < 10000 && optVal > 6) {
+                    monthsSelect.options[i].disabled = true;
+                    monthsSelect.options[i].style.color = '#cbd5e1';
+                } else {
+                    monthsSelect.options[i].disabled = false;
+                    monthsSelect.options[i].style.color = '#1e293b';
+                }
+            }
+
+            if (net < 10000 && currentMonthVal > 6) {
+                monthsSelect.value = "6";
+                currentMonthVal = 6;
+                noteEl.textContent = "(ยอดต่ำกว่า 10,000 บาท ผ่อนได้สูงสุด 6 งวด)";
+            } else if (net >= 10000) {
+                noteEl.textContent = "(ผ่อนได้สูงสุด 12 งวด)";
+            } else {
+                noteEl.textContent = "";
+            }
+
+            let months = currentMonthVal;
+            let perMonth = net / months;
+            document.getElementById('per-month-price').value = perMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' บาท / งวด (จำนวน ' + months + ' งวด)';
+        }
+
+        // ตรวจสอบจำนวนภาพถ่ายไม่เกิน 9 ภาพ
+        document.getElementById('car-photos').addEventListener('change', function(e) {
+            if (this.files.length > 9) {
+                alert('คุณเลือกภาพถ่ายเกิน 9 ภาพ ระบบจำกัดให้อัปโหลดได้สูงสุดไม่เกิน 9 ภาพครับ');
+                this.value = '';
+            }
+        });
 
         function switchTab(tabName) {
             document.getElementById('tab-home').classList.add('hidden');
@@ -283,13 +360,6 @@
 
             document.getElementById('tab-' + tabName).classList.remove('hidden');
             document.getElementById('btn-' + tabName).className = 'px-3 py-1.5 rounded bg-amber-500 text-slate-900 font-semibold transition';
-        }
-
-        function selectPackage(planName, price) {
-            document.getElementById('selected-plan').value = planName;
-            document.getElementById('selected-price').value = price + ' บาท';
-            switchTab('contract');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
