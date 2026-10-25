@@ -108,8 +108,8 @@
                             <div id="car-reg-preview" class="text-xs text-amber-200"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
-                            <label class="block text-xs text-slate-200">3. ภาพถ่ายรถยนต์ (สูงสุด 9 ภาพ)</label>
-                            <input type="file" id="home-car-photos" accept="image/*" multiple onchange="previewPhotos(this, 'car-photos-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
+                            <label class="block text-xs text-slate-200">3. ภาพถ่ายรถยนต์ (สะสมได้สูงสุด 9 ภาพ)</label>
+                            <input type="file" id="home-car-photos" accept="image/*" multiple onchange="handlePhotoUpload(this)" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
                             <div id="car-photos-preview" class="flex flex-wrap gap-1 mt-1"></div>
                         </div>
                     </div>
@@ -272,6 +272,9 @@
             "Suzuki": ["Swift", "Ciaz", "Ertiga", "XL7", "Carry"]
         };
 
+        // ตัวแปรเก็บสะสมไฟล์ภาพถ่ายรถยนต์ทั้งหมด
+        let accumulatedPhotos = [];
+
         function updateCarModels() {
             const brandSelect = document.getElementById('sel-brand');
             const modelSelect = document.getElementById('sel-model');
@@ -310,29 +313,57 @@
             }
         }
 
-        // ฟังก์ชันพรีวิวภาพถ่ายรถยนต์หลายภาพ (ไม่เกิน 9 ภาพ)
-        function previewPhotos(input, previewId) {
-            const container = document.getElementById(previewId);
-            container.innerHTML = '';
-            if (input.files.length > 9) {
-                alert('คุณเลือกภาพถ่ายเกิน 9 ภาพ ระบบจำกัดให้อัปโหลดได้สูงสุดไม่เกิน 9 ภาพครับ');
-                input.value = '';
-                return;
-            }
+        // ฟังก์ชันสะสมและพรีวิวภาพถ่ายรถยนต์หลายภาพ (รวมกันไม่เกิน 9 ภาพ)
+        function handlePhotoUpload(input) {
             if (input.files) {
                 Array.from(input.files).forEach(file => {
                     if (file.type.startsWith('image/')) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.className = 'w-12 h-12 object-cover rounded border border-amber-300';
-                            container.appendChild(img);
+                        if (accumulatedPhotos.length < 9) {
+                            accumulatedPhotos.push(file);
                         }
-                        reader.readAsDataURL(file);
                     }
                 });
             }
+
+            if (accumulatedPhotos.length > 9) {
+                alert('สะสมภาพถ่ายครบ 9 ภาพแล้ว ระบบจำกัดสูงสุดไม่เกิน 9 ภาพครับ');
+                accumulatedPhotos = accumulatedPhotos.slice(0, 9);
+            }
+
+            renderPhotoPreviews();
+            input.value = ''; // รีเซ็ต input เพื่อให้เลือกไฟล์เดิมซ้ำได้ถ้าต้องการ
+        }
+
+        // แสดงพรีวิวรูปภาพทั้งหมดที่สะสมไว้
+        function renderPhotoPreviews() {
+            const container = document.getElementById('car-photos-preview');
+            container.innerHTML = '';
+
+            accumulatedPhotos.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'relative inline-block';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-12 h-12 object-cover rounded border border-amber-300';
+
+                    // ปุ่มกากบาทลบรูปทีละรูป
+                    const delBtn = document.createElement('button');
+                    delBtn.innerHTML = '&times;';
+                    delBtn.className = 'absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center font-bold hover:bg-red-700';
+                    delBtn.onclick = function() {
+                        accumulatedPhotos.splice(index, 1);
+                        renderPhotoPreviews();
+                    };
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(delBtn);
+                    container.appendChild(wrapper);
+                }
+                reader.readAsDataURL(file);
+            });
         }
 
         function searchInsurance() {
@@ -343,7 +374,7 @@
                 alert('กรุณาเลือกยี่ห้อ รุ่น และปีจดทะเบียนให้ครบถ้วนครับ');
                 return;
             }
-            alert('บันทึกข้อมูลรถและเอกสารเรียบร้อย! แสดงรายการเบี้ยประกันด้านล่างเพื่อให้ลูกค้าเลือกได้เลยครับ');
+            alert('บันทึกข้อมูลรถและภาพถ่าย ' + accumulatedPhotos.length + ' ภาพเรียบร้อย! แสดงรายการเบี้ยประกันด้านล่างเพื่อให้ลูกค้าเลือกได้เลยครับ');
         }
 
         function selectPackage(planName, price) {
