@@ -40,7 +40,7 @@
                 <h2 class="text-2xl font-bold mb-2">เช็คเบี้ยประกันรถยนต์และผ่อนชำระง่ายๆ</h2>
                 <p class="text-slate-300 text-sm mb-6">บริการออนไลน์ครบวงจรโดย คุณธัชกร ธราธรชนะกุล (getsinsure)</p>
                 
-                <div class="bg-white/10 p-4 rounded-xl backdrop-blur grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white/10 p-4 rounded-xl backdrop-blur grid grid-cols-1 md:grid-cols-5 gap-3">
                     <div>
                         <label class="block text-xs text-slate-300 mb-1">ประเภทประกันภัย</label>
                         <select id="sel-type" class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
@@ -50,16 +50,63 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs text-slate-300 mb-1">ประเภท / ยี่ห้อ</label>
-                        <select class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
-                            <option>เช่น รถเก๋ง / Honda, Toyota</option>
-                            <option>เช่น รถกระบะ 4 ประตู</option>
-                            <option>เช่น รถตู้โดยสาร</option>
+                        <label class="block text-xs text-slate-300 mb-1">ยี่ห้อรถยนต์</label>
+                        <select id="sel-brand" onchange="updateCarModels()" class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
+                            <option value="">-- เลือกยี่ห้อ --</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Isuzu">Isuzu</option>
+                            <option value="Mitsubishi">Mitsubishi</option>
+                            <option value="Nissan">Nissan</option>
+                            <option value="Mazda">Mazda</option>
+                            <option value="Ford">Ford</option>
+                            <option value="MG">MG</option>
+                            <option value="BYD">BYD</option>
+                            <option value="GWM">GWM</option>
+                            <option value="Suzuki">Suzuki</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-300 mb-1">รุ่นรถยนต์</label>
+                        <select id="sel-model" class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
+                            <option value="">-- เลือกยี่ห้อก่อน --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-300 mb-1">ปีจดทะเบียน (ย้อนหลัง 25 ปี)</label>
+                        <select id="sel-year" class="w-full bg-white text-slate-900 p-2.5 rounded-lg text-sm">
+                            <option value="">-- เลือกปีรถ --</option>
+                            <option value="2026">2026 (2569)</option>
+                            <option value="2025">2025 (2568)</option>
+                            <option value="2024">2024 (2567)</option>
+                            <option value="2023">2023 (2566)</option>
+                            <option value="2022">2022 (2565)</option>
+                            <option value="2021">2021 (2564)</option>
+                            <option value="2020">2020 (2563)</option>
+                            <option value="2019">2019 (2562)</option>
+                            <option value="2018">2018 (2561)</option>
+                            <option value="2017">2017 (2560)</option>
+                            <option value="2016">2016 (2559)</option>
+                            <option value="2015">2015 (2558)</option>
+                            <option value="2014">2014 (2557)</option>
+                            <option value="2013">2013 (2556)</option>
+                            <option value="2012">2012 (2555)</option>
+                            <option value="2011">2011 (2554)</option>
+                            <option value="2010">2010 (2553)</option>
+                            <option value="2009">2009 (2552)</option>
+                            <option value="2008">2008 (2551)</option>
+                            <option value="2007">2007 (2550)</option>
+                            <option value="2006">2006 (2549)</option>
+                            <option value="2005">2005 (2548)</option>
+                            <option value="2004">2004 (2547)</option>
+                            <option value="2003">2003 (2546)</option>
+                            <option value="2002">2002 (2545)</option>
+                            <option value="2001">2001 หรือเก่ากว่า (2544)</option>
                         </select>
                     </div>
                     <div class="flex items-end">
-                        <button onclick="alert('ระบบกำลังดึงข้อมูลเบี้ยประกันที่ดีที่สุดให้ท่าน...')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold p-2.5 rounded-lg text-sm shadow transition">
-                            🔍 ค้นหาเบี้ยทันที
+                        <button onclick="searchInsurance()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold p-2.5 rounded-lg text-sm shadow transition">
+                            🔍 ค้นหาเบี้ย
                         </button>
                     </div>
                 </div>
@@ -176,8 +223,53 @@
         © 2026 getsinsure - บริการนายหน้าประกันภัยรถยนต์ออนไลน์ โดย คุณธัชกร ธราธรชนะกุล
     </footer>
 
-    <!-- JavaScript ควบคุมการเปลี่ยนหน้า Tab -->
+    <!-- JavaScript -->
     <script>
+        const carModelsData = {
+            "Toyota": ["Yaris", "Yaris Ativ", "Corolla Altis", "Camry", "Vios", "Hilux Revo", "Hilux Vigo", "Fortuner", "Corolla Cross", "C-HR", "Soluna", "Tiger"],
+            "Honda": ["City", "City Hatchback", "Civic", "Accord", "HR-V", "CR-V", "BR-V", "Jazz", "Brio", "Stream"],
+            "Isuzu": ["D-Max", "MU-X", "Dragon Eye", "TFR"],
+            "Mitsubishi": ["Attrage", "Mirage", "Xpander", "Pajero Sport", "Triton", "L200 Cyclone", "Cedia"],
+            "Nissan": ["Almera", "Kicks", "Navara", "Terra", "March", "Sylphy", "Teana", "Sunny"],
+            "Mazda": ["Mazda 2", "Mazda 3", "CX-3", "CX-30", "CX-5", "BT-50", "Mazda 323", "Fighter"],
+            "Ford": ["Ranger", "Everest", "Raptor", "Focus", "Fiesta", "Escape"],
+            "MG": ["MG 3", "MG 5", "MG HS", "MG ZS", "MG EP", "MG4 Electric", "MG Extender"],
+            "BYD": ["Atto 3", "Dolphin", "Seal", "Sealion 6"],
+            "GWM": ["Haval H6", "Haval Jolion", "Ora Good Cat"],
+            "Suzuki": ["Swift", "Ciaz", "Ertiga", "XL7", "Carry", "APV", "Caribian"]
+        };
+
+        function updateCarModels() {
+            const brandSelect = document.getElementById('sel-brand');
+            const modelSelect = document.getElementById('sel-model');
+            const selectedBrand = brandSelect.value;
+
+            modelSelect.innerHTML = '<option value="">-- เลือกรุ่นรถ --</option>';
+
+            if (selectedBrand && carModelsData[selectedBrand]) {
+                carModelsData[selectedBrand].forEach(model => {
+                    const opt = document.createElement('option');
+                    opt.value = model;
+                    opt.textContent = model;
+                    modelSelect.appendChild(opt);
+                });
+            } else {
+                modelSelect.innerHTML = '<option value="">-- กรุณาเลือกยี่ห้อก่อน --</option>';
+            }
+        }
+
+        function searchInsurance() {
+            const brand = document.getElementById('sel-brand').value;
+            const model = document.getElementById('sel-model').value;
+            const year = document.getElementById('sel-year').value;
+
+            if (!brand || !model || !year) {
+                alert('กรุณาเลือกยี่ห้อ รุ่น และปีจดทะเบียนให้ครบถ้วนครับ');
+                return;
+            }
+            alert('กำลังค้นหาเบี้ยประกันสำหรับ ' + brand + ' ' + model + ' (ปี ' + year + ')...');
+        }
+
         function switchTab(tabName) {
             document.getElementById('tab-home').classList.add('hidden');
             document.getElementById('tab-contract').classList.add('hidden');
