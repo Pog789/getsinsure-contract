@@ -100,12 +100,12 @@
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">1. สำเนาบัตรประชาชน</label>
                             <input type="file" id="home-id-card" accept="image/*,.pdf" onchange="previewFile(this, 'id-card-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="id-card-preview" class="text-xs text-amber-200"></div>
+                            <div id="id-card-preview" class="text-xs text-amber-200 mt-1"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">2. สำเนาทะเบียนรถ</label>
                             <input type="file" id="home-car-reg" accept="image/*,.pdf" onchange="previewFile(this, 'car-reg-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="car-reg-preview" class="text-xs text-amber-200"></div>
+                            <div id="car-reg-preview" class="text-xs text-amber-200 mt-1"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">3. ภาพถ่ายรถยนต์ (สะสมได้สูงสุด 9 ภาพ)</label>
@@ -170,16 +170,17 @@
         </section>
 
         <!-- Tab 2: สร้างสัญญาผ่อน -->
-        <section id="tab-contract" class="hidden bg-white p-6 rounded-2xl shadow border border-slate-200 space-y-4">
+        <section id="tab-contract" class="hidden bg-white p-6 rounded-2xl shadow border border-slate-200 space-y-6">
             <h2 class="text-xl font-bold text-slate-900 border-b pb-3">📝 2. แบบฟอร์มซื้อประกันและเลือกผ่อนชำระ</h2>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">ชื่อ-นามสกุล ลูกค้า</label>
-                    <input type="text" id="cust-name" placeholder="กรอกชื่อและนามสกุลลูกค้า" class="w-full border p-2.5 rounded-lg text-sm">
+                    <input type="text" id="cust-name" oninput="calculateInstallment()" placeholder="กรอกชื่อและนามสกุลลูกค้า" class="w-full border p-2.5 rounded-lg text-sm">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ติดต่อ</label>
-                    <input type="text" id="cust-phone" placeholder="08x-xxx-xxxx" class="w-full border p-2.5 rounded-lg text-sm">
+                    <input type="text" id="cust-phone" oninput="calculateInstallment()" placeholder="08x-xxx-xxxx" class="w-full border p-2.5 rounded-lg text-sm">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">รายการประกันที่ลูกค้าเลือก</label>
@@ -190,8 +191,25 @@
                     <input type="number" id="base-price" value="0" oninput="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm font-bold bg-slate-50">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">ส่วนลดพิเศษ (บาท)</label>
-                    <input type="number" id="discount-price" value="0" oninput="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm text-red-600 font-bold">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ส่วนลดพิเศษ (%)</label>
+                    <select id="discount-percent" onchange="calculateInstallment()" class="w-full border p-2.5 rounded-lg text-sm font-bold bg-white text-red-600">
+                        <option value="0">0% (ไม่มีส่วนลด)</option>
+                        <option value="1">1%</option>
+                        <option value="2">2%</option>
+                        <option value="3">3%</option>
+                        <option value="4">4%</option>
+                        <option value="5">5%</option>
+                        <option value="6">6%</option>
+                        <option value="7">7%</option>
+                        <option value="8">8%</option>
+                        <option value="9">9%</option>
+                        <option value="10">10%</option>
+                        <option value="11">11%</option>
+                        <option value="12">12%</option>
+                        <option value="13">13%</option>
+                        <option value="14">14%</option>
+                        <option value="15">15%</option>
+                    </select>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">ยอดสุทธิหลังหักส่วนลด (บาท)</label>
@@ -212,9 +230,31 @@
                     <input type="text" id="per-month-price" value="0 บาท/งวด" readonly class="w-full bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-sm text-amber-900 font-bold">
                 </div>
             </div>
-            <div class="pt-4">
-                <button onclick="alert('บันทึกข้อมูลการซื้อและสัญญาผ่อนชำระเรียบร้อย พร้อมส่งลิงก์ให้ลูกค้าตรวจสอบ!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
-                    💾 บันทึกสัญญาและส่งให้ลูกค้าชำระเงิน
+
+            <!-- แสดงร่างสัญญาผ่อนชำระ -->
+            <div class="bg-slate-50 border border-slate-300 p-5 rounded-xl space-y-3">
+                <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+                    <span>📄 ร่างสัญญาผ่อนชำระเบี้ยประกันภัย (พรีวิวก่อนส่งให้ลูกค้า)</span>
+                    <button onclick="previewContractModal()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded shadow transition">
+                        🔍 ขยายดูตัวอย่างสัญญาเต็มจอ
+                    </button>
+                </h3>
+                <div id="contract-box" class="text-xs text-slate-700 space-y-2 font-mono bg-white p-4 rounded-lg border">
+                    <p><strong>สัญญาเลขที่:</strong> GS-2026-001</p>
+                    <p><strong>ผู้เอาประกันภัย:</strong> <span id="c-name" class="text-blue-600">[โปรดระบุชื่อลูกค้า]</span> | <strong>เบอร์โทร:</strong> <span id="c-phone" class="text-blue-600">[โปรดระบุเบอร์โทร]</span></p>
+                    <p><strong>รายการประกัน:</strong> <span id="c-plan" class="text-blue-600">-</span></p>
+                    <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="c-net" class="text-blue-600 font-bold">0 บาท</span></p>
+                    <p><strong>เงื่อนไขการชำระ:</strong> แบ่งชำระจำนวน <span id="c-months" class="text-blue-600 font-bold">1 งวด</span> งวดละ <span id="c-per-month" class="text-amber-700 font-bold">0 บาท</span></p>
+                    <p class="text-slate-500 text-[11px] pt-2 border-t">ออกโดยบริการออนไลน์ getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</p>
+                </div>
+            </div>
+
+            <div class="pt-2 flex gap-3">
+                <button onclick="previewContractModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
+                    👁️ ตรวจสอบตัวอย่างสัญญาก่อนส่ง
+                </button>
+                <button onclick="alert('ยืนยันบันทึกสัญญาและสร้างลิงก์สำหรับส่งให้ลูกค้าเรียบร้อย!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
+                    💾 บันทึกและสร้างลิงก์ส่งให้ลูกค้า
                 </button>
             </div>
         </section>
@@ -251,6 +291,29 @@
 
     </main>
 
+    <!-- Modal พรีวิวสัญญาเต็มจอ -->
+    <div id="contract-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 class="font-bold text-lg text-slate-900">📄 พรีวิวร่างสัญญาผ่อนชำระเบี้ยประกันภัย</h3>
+                <button onclick="closeContractModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border text-sm space-y-2 font-mono">
+                <p class="text-center font-bold text-base text-blue-900 mb-3">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์<br><span class="text-xs font-normal text-slate-600">getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</span></p>
+                <p><strong>เลขที่สัญญา:</strong> GS-2026-001</p>
+                <p><strong>ชื่อผู้เอาประกัน:</strong> <span id="m-name" class="text-blue-600">-</span></p>
+                <p><strong>เบอร์โทรศัพท์:</strong> <span id="m-phone" class="text-blue-600">-</span></p>
+                <p><strong>รายการประกัน:</strong> <span id="m-plan" class="text-blue-600">-</span></p>
+                <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="m-net" class="text-blue-600 font-bold">-</span></p>
+                <p><strong>แผนการผ่อนชำระ:</strong> แบ่งจ่าย <span id="m-months" class="text-blue-600 font-bold">-</span> งวดละ <span id="m-per-month" class="text-amber-700 font-bold">-</span></p>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeContractModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium px-4 py-2 rounded-lg text-sm">ปิดหน้าต่าง</button>
+                <button onclick="alert('คัดลอกลิงก์หรือส่งสัญญาให้ลูกค้าเรียบร้อย!'); closeContractModal();" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-sm">คัดลอก/ส่งลิงก์ให้ลูกค้า</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="text-center py-6 text-xs text-slate-500 mt-12 border-t">
         © 2026 getsinsure - บริการนายหน้าประกันภัยรถยนต์ออนไลน์ โดย คุณธัชกร ธราธรชนะกุล
@@ -272,7 +335,6 @@
             "Suzuki": ["Swift", "Ciaz", "Ertiga", "XL7", "Carry"]
         };
 
-        // ตัวแปรเก็บสะสมไฟล์ภาพถ่ายรถยนต์ทั้งหมด
         let accumulatedPhotos = [];
 
         function updateCarModels() {
@@ -313,7 +375,6 @@
             }
         }
 
-        // ฟังก์ชันสะสมและพรีวิวภาพถ่ายรถยนต์หลายภาพ (รวมกันไม่เกิน 9 ภาพ)
         function handlePhotoUpload(input) {
             if (input.files) {
                 Array.from(input.files).forEach(file => {
@@ -324,32 +385,25 @@
                     }
                 });
             }
-
             if (accumulatedPhotos.length > 9) {
                 alert('สะสมภาพถ่ายครบ 9 ภาพแล้ว ระบบจำกัดสูงสุดไม่เกิน 9 ภาพครับ');
                 accumulatedPhotos = accumulatedPhotos.slice(0, 9);
             }
-
             renderPhotoPreviews();
-            input.value = ''; // รีเซ็ต input เพื่อให้เลือกไฟล์เดิมซ้ำได้ถ้าต้องการ
+            input.value = '';
         }
 
-        // แสดงพรีวิวรูปภาพทั้งหมดที่สะสมไว้
         function renderPhotoPreviews() {
             const container = document.getElementById('car-photos-preview');
             container.innerHTML = '';
-
             accumulatedPhotos.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const wrapper = document.createElement('div');
                     wrapper.className = 'relative inline-block';
-
                     const img = document.createElement('img');
                     img.src = e.target.result;
                     img.className = 'w-12 h-12 object-cover rounded border border-amber-300';
-
-                    // ปุ่มกากบาทลบรูปทีละรูป
                     const delBtn = document.createElement('button');
                     delBtn.innerHTML = '&times;';
                     delBtn.className = 'absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-4 h-4 text-xs flex items-center justify-center font-bold hover:bg-red-700';
@@ -357,7 +411,6 @@
                         accumulatedPhotos.splice(index, 1);
                         renderPhotoPreviews();
                     };
-
                     wrapper.appendChild(img);
                     wrapper.appendChild(delBtn);
                     container.appendChild(wrapper);
@@ -387,17 +440,20 @@
 
         function calculateInstallment() {
             const base = parseFloat(document.getElementById('base-price').value) || 0;
-            const discount = parseFloat(document.getElementById('discount-price').value) || 0;
+            const discountPercent = parseFloat(document.getElementById('discount-percent').value) || 0;
             const monthsSelect = document.getElementById('installment-months');
             const noteEl = document.getElementById('installment-note');
 
-            let net = base - discount;
+            // คำนวณหักส่วนลดเป็น %
+            let discountAmount = base * (discountPercent / 100);
+            let net = base - discountAmount;
             if (net < 0) net = 0;
 
-            document.getElementById('net-price').value = net.toLocaleString() + ' บาท';
+            document.getElementById('net-price').value = Math.round(net).toLocaleString() + ' บาท (' + discountPercent + '% ส่วนลด)';
 
             let currentMonthVal = parseInt(monthsSelect.value);
             
+            // เงื่อนไข: ยอดสุทธิต่ำกว่า 10,000 บาท ผ่อนได้ไม่เกิน 6 งวด
             for (let i = 0; i < monthsSelect.options.length; i++) {
                 let optVal = parseInt(monthsSelect.options[i].value);
                 if (net < 10000 && optVal > 6) {
@@ -422,6 +478,41 @@
             let months = currentMonthVal;
             let perMonth = net / months;
             document.getElementById('per-month-price').value = perMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' บาท / งวด (จำนวน ' + months + ' งวด)';
+
+            updateContractText();
+        }
+
+        function updateContractText() {
+            const name = document.getElementById('cust-name').value || '[โปรดระบุชื่อลูกค้า]';
+            const phone = document.getElementById('cust-phone').value || '[โปรดระบุเบอร์โทร]';
+            const plan = document.getElementById('selected-plan').value || '-';
+            const net = document.getElementById('net-price').value || '0 บาท';
+            const months = document.getElementById('installment-months').value || '1';
+            const perMonth = document.getElementById('per-month-price').value || '0 บาท';
+
+            document.getElementById('c-name').textContent = name;
+            document.getElementById('c-phone').textContent = phone;
+            document.getElementById('c-plan').textContent = plan;
+            document.getElementById('c-net').textContent = net;
+            document.getElementById('c-months').textContent = months + ' งวด';
+            document.getElementById('c-per-month').textContent = perMonth;
+        }
+
+        // ฟังก์ชันเปิด-ปิด Modal พรีวิวสัญญาเต็มจอ
+        function previewContractModal() {
+            updateContractText();
+            document.getElementById('m-name').textContent = document.getElementById('c-name').textContent;
+            document.getElementById('m-phone').textContent = document.getElementById('c-phone').textContent;
+            document.getElementById('m-plan').textContent = document.getElementById('c-plan').textContent;
+            document.getElementById('m-net').textContent = document.getElementById('c-net').textContent;
+            document.getElementById('m-months').textContent = document.getElementById('c-months').textContent;
+            document.getElementById('m-per-month').textContent = document.getElementById('c-per-month').textContent;
+            
+            document.getElementById('contract-modal').classList.remove('hidden');
+        }
+
+        function closeContractModal() {
+            document.getElementById('contract-modal').classList.add('hidden');
         }
 
         function switchTab(tabName) {
