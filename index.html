@@ -133,41 +133,41 @@
                 <p class="text-xs text-slate-500 mb-4">เมื่อลูกค้าตัดสินใจเลือกแพ็กเกจแล้ว สามารถคลิกปุ่มด้านล่างเพื่อเข้าสู่ขั้นตอนการซื้อและเลือกผ่อนชำระ</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Card 1 -->
-                    <div class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between">
+                    <div id="card-1" class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between transition">
                         <div>
                             <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">ยอดนิยม</span>
                             <h4 class="font-bold text-slate-900 mt-2">บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)</h4>
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 1 (คุ้มครองครบ)</p>
                             <div class="mt-4 text-2xl font-bold text-blue-600">12,500 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('กรุงเทพประกันภัย ชั้น 1', 12500)" class="mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
-                            ✅ ลูกค้าเลือกแผนนี้ (ไปหน้าซื้อ/ผ่อน)
+                        <button id="btn-pkg-1" onclick="selectPackage(1, 'กรุงเทพประกันภัย ชั้น 1', 12500)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
+                            👉 เลือกแผนนี้ / ไปหน้าซื้อผ่อน
                         </button>
                     </div>
 
                     <!-- Card 2 -->
-                    <div class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between">
+                    <div id="card-2" class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between transition">
                         <div>
                             <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">คุ้มค่า</span>
                             <h4 class="font-bold text-slate-900 mt-2">บริษัท วิริยะประกันภัย จำกัด (มหาชน)</h4>
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 2+ (มีเงินช่วยเหลือ)</p>
                             <div class="mt-4 text-2xl font-bold text-amber-600">11,700 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('วิริยะประกันภัย ชั้น 2+', 11700)" class="mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
-                            ✅ ลูกค้าเลือกแผนนี้ (ไปหน้าซื้อ/ผ่อน)
+                        <button id="btn-pkg-2" onclick="selectPackage(2, 'วิริยะประกันภัย ชั้น 2+', 11700)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
+                            👉 เลือกแผนนี้ / ไปหน้าซื้อผ่อน
                         </button>
                     </div>
 
                     <!-- Card 3 -->
-                    <div class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between">
+                    <div id="card-3" class="bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between transition">
                         <div>
                             <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">ประหยัด</span>
                             <h4 class="font-bold text-slate-900 mt-2">วิริยะ / อาคเนย์ประกันภัย</h4>
                             <p class="text-xs text-slate-500 mt-1">ประกันภัยรถยนต์ ชั้น 3+</p>
                             <div class="mt-4 text-2xl font-bold text-emerald-600">8,500 <span class="text-xs text-slate-500 font-normal">บาท/ปี</span></div>
                         </div>
-                        <button onclick="selectPackage('วิริยะ/อาคเนย์ ชั้น 3+', 8500)" class="mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
-                            ✅ ลูกค้าเลือกแผนนี้ (ไปหน้าซื้อ/ผ่อน)
+                        <button id="btn-pkg-3" onclick="selectPackage(3, 'วิริยะ/อาคเนย์ ชั้น 3+', 8500)" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition shadow">
+                            👉 เลือกแผนนี้ / ไปหน้าซื้อผ่อน
                         </button>
                     </div>
                 </div>
@@ -329,7 +329,7 @@
 
     </main>
 
-    <!-- Modal พรีวิวสัญญาเต็มจอ (แสดงใบสัญญาฉบับทางการ) -->
+    <!-- Modal พรีวิวสัญญาเต็มจอ -->
     <div id="contract-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl border max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
@@ -478,9 +478,25 @@
             alert('บันทึกข้อมูลรถและภาพถ่าย ' + accumulatedPhotos.length + ' ภาพเรียบร้อย! แสดงรายการเบี้ยประกันด้านล่างเพื่อให้ลูกค้าเลือกได้เลยครับ');
         }
 
-        function selectPackage(planName, price) {
+        // ฟังก์ชันเลือกแพ็กเกจ พร้อมเปลี่ยนสถานะปุ่มและสีการ์ดให้เห็นชัดเจนว่าเลือกอันไหน
+        function selectPackage(cardId, planName, price) {
             document.getElementById('selected-plan').value = planName;
             document.getElementById('base-price').value = price;
+
+            // รีเซ็ตการ์ดทั้งหมดให้เป็นปกติ
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('card-' + i).className = 'bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between transition';
+                const btn = document.getElementById('btn-pkg-' + i);
+                btn.className = 'mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-sm transition shadow';
+                btn.innerHTML = '👉 เลือกแผนนี้ / ไปหน้าซื้อผ่อน';
+            }
+
+            // เน้นการ์ดที่ถูกเลือก
+            document.getElementById('card-' + cardId).className = 'bg-emerald-50 p-5 rounded-xl shadow-lg border-2 border-emerald-500 flex flex-col justify-between transition transform scale-102';
+            const selectedBtn = document.getElementById('btn-pkg-' + cardId);
+            selectedBtn.className = 'mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-lg';
+            selectedBtn.innerHTML = '✅ เลือกแผนนี้แล้ว (ไปหน้าซื้อ/ผ่อน)';
+
             calculateInstallment();
             switchTab('contract');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -523,7 +539,6 @@
 
             let months = currentMonthVal;
             let perMonth = net / months;
-            document.getElementById('per-month-price').value = perMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' บาท / งวด (จำนวน ' + months + ' งวด)';
 
             updateContractUI();
         }
@@ -538,7 +553,6 @@
             const months = parseInt(document.getElementById('installment-months').value) || 1;
             const totalNet = parseFloat(netStr.replace(/,/g, '')) || 0;
 
-            // อัปเดตข้อความในสัญญาหลัก
             document.getElementById('s-name').textContent = name;
             document.getElementById('s-idcard').textContent = idcard;
             document.getElementById('s-address').textContent = address;
@@ -548,7 +562,6 @@
             document.getElementById('s-net').textContent = netStr;
             document.getElementById('s-sign-name').textContent = name;
 
-            // สร้างตารางงวดผ่อน
             let scheduleHTML = '';
             let firstMonth = Math.round(totalNet / months);
             let otherMonth = Math.round((totalNet - firstMonth) / (months - 1)) || firstMonth;
