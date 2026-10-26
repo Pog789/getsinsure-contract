@@ -243,7 +243,7 @@
             <!-- แสดงสัญญาขอแบ่งชำระค่าเบี้ยประกัน (แบบฉบับทางการ) -->
             <div class="bg-white border-2 border-slate-300 p-8 rounded-xl space-y-6 shadow-sm">
                 <div class="text-right text-xs text-slate-500">
-                    <span id="contract-date">เขียนวันที่: 24 ตุลาคม 2569</span>
+                    <span>เขียนวันที่: 24 ตุลาคม 2569</span>
                 </div>
                 
                 <div class="text-center space-y-1">
@@ -251,7 +251,7 @@
                 </div>
 
                 <div class="text-sm text-slate-700 leading-relaxed space-y-4">
-                    <p id="contract-p1">
+                    <p>
                         ข้าพเจ้า <span id="s-name" class="font-semibold text-blue-900">[ชื่อ-นามสกุลลูกค้า]</span> เลขบัตรประจำตัวประชาชน <span id="s-idcard" class="font-semibold text-blue-900">[เลขบัตรประชาชน]</span> ที่อยู่ <span id="s-address" class="font-semibold text-blue-900">[ที่อยู่ลูกค้า]</span> ผู้ซื้อประกันภัยรถยนต์ของบริษัท <span id="s-plan" class="font-semibold text-blue-900">[บริษัทประกัน]</span> ลงวันที่คุ้มครอง <span class="font-semibold">2/11/69</span> โดยซื้อผ่าน <strong>นายธัชกร ธราธรชนะกุล</strong> ผู้ขาย ผู้ซื้อมีความประสงค์ขอแบ่งชำระ <span id="s-months-text" class="font-semibold">3 งวด</span> รวมยอดแบ่งชำระ <span id="s-base" class="font-semibold">0 บาท</span> หักส่วนลด เหลือ <span id="s-net" class="font-semibold text-blue-900">0 บาท</span>
                     </p>
 
@@ -329,7 +329,7 @@
 
     </main>
 
-    <!-- Modal พรีวิวสัญญาเต็มจอ -->
+    <!-- Modal พรีวิวสัญญาเต็มจอ (แสดงใบสัญญาฉบับทางการ) -->
     <div id="contract-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl border max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
@@ -337,19 +337,19 @@
                 <button onclick="closeContractModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
             </div>
             
-            <div id="printable-contract" class="bg-white p-6 rounded-xl border space-y-4 text-xs font-mono">
+            <div class="bg-white p-6 rounded-xl border space-y-4 text-xs font-mono">
                 <div class="text-right text-[11px] text-slate-500">เขียนวันที่: 24 ตุลาคม 2569</div>
                 <h4 class="text-center font-bold text-sm text-slate-900 underline">สัญญาขอแบ่งชำระค่าเบี้ยประกัน</h4>
                 <p class="leading-relaxed">
                     ข้าพเจ้า <span id="m-name" class="font-bold text-blue-900">[ชื่อ]</span> เลขบัตรประชาชน <span id="m-idcard" class="font-bold text-blue-900">[เลขบัตร]</span> ที่อยู่ <span id="m-address" class="font-bold text-blue-900">[ที่อยู่]</span> ผู้ซื้อประกันภัยรถยนต์ของบริษัท <span id="m-plan" class="font-bold text-blue-900">[ประกัน]</span> ลงวันที่คุ้มครอง <strong>2/11/69</strong> โดยซื้อผ่าน <strong>นายธัชกร ธราธรชนะกุล</strong> ผู้ขาย ผู้ซื้อมีความประสงค์ขอแบ่งชำระ <span id="m-months" class="font-bold">3 งวด</span> รวมยอดแบ่งชำระ <span id="m-base" class="font-bold">0 บาท</span> หักส่วนลด เหลือ <span id="m-net" class="font-bold text-blue-900">0 บาท</span>
                 </p>
-                <div id="m-schedule-box" class="bg-slate-50 p-3 rounded border space-y-1">
+                <div id="m-schedule-box" class="bg-slate-50 p-3 rounded border space-y-1 text-xs">
                     <!-- ตารางงวดผ่อนใน Modal -->
                 </div>
                 <p class="text-[11px] text-slate-600 leading-relaxed">
                     <strong>เงื่อนไขหลัก:</strong> ผู้ซื้อต้องส่งค่างวดให้ตรงกำหนด หากล่าช้าปรับงวดละ 200 บาท / ผิดนัด 2 งวดติดต่อกันยินดีให้บอกเลิกสัญญา / ระหว่างผ่อนถือสำเนากรมธรรม์ไว้เป็นหลักฐาน
                 </p>
-                <div class="grid grid-cols-2 gap-6 pt-6 border-t text-center">
+                <div class="grid grid-cols-2 gap-6 pt-6 border-t text-center text-xs">
                     <div>ลงชื่อ ................................................. ผู้ซื้อ<br>(<span id="m-sign-name">[ชื่อ]</span>)</div>
                     <div>ลงชื่อ ................................................. ผู้ขาย<br>(นายธัชกร ธราธรชนะกุล)</div>
                 </div>
@@ -358,7 +358,7 @@
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeContractModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium px-4 py-2 rounded-lg text-sm">ปิดหน้าต่าง</button>
                 <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-sm">พิมพ์ / บันทึก PDF</button>
-                <button onclick="alert('คัดลอกลิงก์หรือส่งสัญญาให้ลูกค้าเรียบร้อย!'); closeContractModal();" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-sm">ส่งลิงก์ให้ลูกค้า</button>
+                <button onclick="alert('ส่งลิงก์สัญญาให้ลูกค้าเรียบร้อย!'); closeContractModal();" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-sm">ส่งลิงก์ให้ลูกค้า</button>
             </div>
         </div>
     </div>
@@ -536,7 +536,7 @@
             const base = parseFloat(document.getElementById('base-price').value) || 0;
             const netStr = document.getElementById('net-price').value || '0 บาท';
             const months = parseInt(document.getElementById('installment-months').value) || 1;
-            const perMonth = netStr !== '0' ? (parseFloat(netStr.replace(/,/g, '')) / months) : 0;
+            const totalNet = parseFloat(netStr.replace(/,/g, '')) || 0;
 
             // อัปเดตข้อความในสัญญาหลัก
             document.getElementById('s-name').textContent = name;
@@ -550,7 +550,6 @@
 
             // สร้างตารางงวดผ่อน
             let scheduleHTML = '';
-            let totalNet = parseFloat(netStr.replace(/,/g, '')) || 0;
             let firstMonth = Math.round(totalNet / months);
             let otherMonth = Math.round((totalNet - firstMonth) / (months - 1)) || firstMonth;
 
