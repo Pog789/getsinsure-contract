@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Sarabun', sans-serif; }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-contract, #printable-contract * { visibility: visible; }
+            #printable-contract { position: absolute; left: 0; top: 0; width: 100%; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -179,6 +184,14 @@
                     <input type="text" id="cust-name" oninput="calculateInstallment()" placeholder="กรอกชื่อและนามสกุลลูกค้า" class="w-full border p-2.5 rounded-lg text-sm">
                 </div>
                 <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">เลขบัตรประจำตัวประชาชนลูกค้า</label>
+                    <input type="text" id="cust-idcard" oninput="calculateInstallment()" placeholder="เลขบัตร 13 หลัก" class="w-full border p-2.5 rounded-lg text-sm">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">ที่อยู่ลูกค้า</label>
+                    <input type="text" id="cust-address" oninput="calculateInstallment()" placeholder="บ้านเลขที่, ซอย, ถนน, แขวง, เขต, จังหวัด" class="w-full border p-2.5 rounded-lg text-sm">
+                </div>
+                <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ติดต่อ</label>
                     <input type="text" id="cust-phone" oninput="calculateInstallment()" placeholder="08x-xxx-xxxx" class="w-full border p-2.5 rounded-lg text-sm">
                 </div>
@@ -225,42 +238,61 @@
                         <option value="12">ผ่อน 12 งวด</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">ยอดผ่อนชำระต่อเดือน</label>
-                    <input type="text" id="per-month-price" value="0 บาท/งวด" readonly class="w-full bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-sm text-amber-900 font-bold">
-                </div>
             </div>
 
-            <!-- แสดงร่างสัญญาผ่อนชำระ พร้อมรายละเอียดเงื่อนไข -->
-            <div class="bg-slate-50 border border-slate-300 p-5 rounded-xl space-y-3">
-                <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
-                    <span>📄 ร่างสัญญาผ่อนชำระเบี้ยประกันภัย (พรีวิวก่อนส่งให้ลูกค้า)</span>
-                    <button onclick="previewContractModal()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded shadow transition">
-                        🔍 ขยายดูตัวอย่างสัญญาเต็มจอ
-                    </button>
-                </h3>
-                <div id="contract-box" class="text-xs text-slate-700 space-y-2 font-mono bg-white p-4 rounded-lg border leading-relaxed">
-                    <p class="font-bold text-blue-900">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์ (getsinsure)</p>
-                    <p><strong>เลขที่สัญญา:</strong> GS-2026-001</p>
-                    <p><strong>ผู้เอาประกันภัย:</strong> <span id="c-name" class="text-blue-600">[โปรดระบุชื่อลูกค้า]</span> | <strong>เบอร์โทร:</strong> <span id="c-phone" class="text-blue-600">[โปรดระบุเบอร์โทร]</span></p>
-                    <p><strong>รายการประกัน:</strong> <span id="c-plan" class="text-blue-600">-</span></p>
-                    <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="c-net" class="text-blue-600 font-bold">0 บาท</span></p>
-                    <p><strong>เงื่อนไขการชำระ:</strong> แบ่งชำระจำนวน <span id="c-months" class="text-blue-600 font-bold">1 งวด</span> งวดละ <span id="c-per-month" class="text-amber-700 font-bold">0 บาท</span></p>
-                    <div class="pt-2 border-t text-[11px] text-slate-600 space-y-1">
-                        <p class="font-semibold text-slate-800">📌 เงื่อนไขและข้อกำหนดสัญญา:</p>
-                        <p>1. ผู้เอาประกันตกลงผ่อนชำระเบี้ยประกันตามงวดกำหนด หากผิดนัดชำระเกินกำหนด สัญญาอาจถูกระงับความคุ้มครองตามเงื่อนไขบริษัทประกัน</p>
-                        <p>2. การคุ้มครองจะมีผลสมบูรณ์เมื่อได้รับการยืนยันการชำระเงินงวดแรกเรียบร้อยแล้ว</p>
-                        <p>3. ออกโดยบริการออนไลน์ getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</p>
+            <!-- แสดงสัญญาขอแบ่งชำระค่าเบี้ยประกัน (แบบฉบับทางการ) -->
+            <div class="bg-white border-2 border-slate-300 p-8 rounded-xl space-y-6 shadow-sm">
+                <div class="text-right text-xs text-slate-500">
+                    <span id="contract-date">เขียนวันที่: 24 ตุลาคม 2569</span>
+                </div>
+                
+                <div class="text-center space-y-1">
+                    <h3 class="text-xl font-bold text-slate-900 underline underline-offset-4">สัญญาขอแบ่งชำระค่าเบี้ยประกัน</h3>
+                </div>
+
+                <div class="text-sm text-slate-700 leading-relaxed space-y-4">
+                    <p id="contract-p1">
+                        ข้าพเจ้า <span id="s-name" class="font-semibold text-blue-900">[ชื่อ-นามสกุลลูกค้า]</span> เลขบัตรประจำตัวประชาชน <span id="s-idcard" class="font-semibold text-blue-900">[เลขบัตรประชาชน]</span> ที่อยู่ <span id="s-address" class="font-semibold text-blue-900">[ที่อยู่ลูกค้า]</span> ผู้ซื้อประกันภัยรถยนต์ของบริษัท <span id="s-plan" class="font-semibold text-blue-900">[บริษัทประกัน]</span> ลงวันที่คุ้มครอง <span class="font-semibold">2/11/69</span> โดยซื้อผ่าน <strong>นายธัชกร ธราธรชนะกุล</strong> ผู้ขาย ผู้ซื้อมีความประสงค์ขอแบ่งชำระ <span id="s-months-text" class="font-semibold">3 งวด</span> รวมยอดแบ่งชำระ <span id="s-base" class="font-semibold">0 บาท</span> หักส่วนลด เหลือ <span id="s-net" class="font-semibold text-blue-900">0 บาท</span>
+                    </p>
+
+                    <!-- ตารางแสดงงวดผ่อน -->
+                    <div id="installment-schedule-box" class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
+                        <!-- ถูกสร้างผ่าน JS -->
+                    </div>
+
+                    <p class="font-semibold text-slate-800 pt-2">ทั้งนี้ผู้ซื้อยินยอมปฏิบัติตามเงื่อนไข ที่ผู้ขายกำหนดให้ทุกประการเพื่อความชัดเจนและถูกต้อง ทางผู้ขายจึงระบุเงื่อนไขหลักดังนี้:</p>
+                    
+                    <ul class="list-disc pl-5 space-y-2 text-xs text-slate-600">
+                        <li>ผู้ซื้อต้องส่งค่างวดให้ตรงตามกำหนดนัดหมายที่ระบุไว้ในแต่ละงวด ณ ที่ทำการผู้ขายกำหนดไว้ หากมีการล่าช้าหรือ ไม่ชำระตามกำหนดต้องแจ้งผู้ขายทราบล่วงหน้า 7 วัน และผู้ซื้อยินยอมที่จะชำระค่าเบี้ยปรับล่าช้า งวดละ 200 บาท</li>
+                        <li>กรณีผู้ซื้อผิดนัดชำระค่าเบี้ยประกันตามที่ตกลงกัน 2 งวดติดต่อกัน ให้ถือว่าผู้ยิ่งยอมที่จะให้ผู้ขายบอกเลิกสัญญาพร้อมยกเลิกความคุ้มครองกรมธรรม์ฉบับข้างต้น และยินดีที่จะชดเชยค่าใช้จ่ายที่เกิดขึ้นทุกกรณี</li>
+                        <li>หากระหว่างการผ่อนชำระยังไม่ครบสมบูรณ์ ผู้ซื้อจะถือสำเนากรมธรรม์ไว้เป็นหลักฐานเท่านั้น กรณีเกิดอุบัติเหตุและต้องการเคลม จะต้องแจ้งให้ผู้ขายทราบ เพื่อดำเนินการประสานเรื่องความคุ้มครองกับบริษัทประกัน</li>
+                    </ul>
+
+                    <p class="text-center text-xs text-slate-500 pt-2 italic">ผู้ซื้อและผู้ขายได้อ่านเข้าใจตรงกันจึงลงลายมือชื่อเป็นหลักฐาน</p>
+                </div>
+
+                <!-- ช่องลงลายมือชื่อ -->
+                <div class="grid grid-cols-2 gap-8 pt-8 border-t mt-6 text-center text-sm">
+                    <div class="space-y-6">
+                        <p>ลงชื่อ ........................................................... ผู้ซื้อ</p>
+                        <p>(<span id="s-sign-name" class="text-slate-600">[ชื่อ-นามสกุลลูกค้า]</span>)</p>
+                    </div>
+                    <div class="space-y-6">
+                        <p>ลงชื่อ ........................................................... ผู้ขาย</p>
+                        <p>(นายธัชกร ธราธรชนะกุล)</p>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-2 flex gap-3">
+            <div class="pt-4 flex gap-3">
                 <button onclick="previewContractModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
-                    👁️ ตรวจสอบตัวอย่างสัญญาก่อนส่ง
+                    👁️ พรีวิวสัญญาเต็มจอ
                 </button>
-                <button onclick="alert('ยืนยันบันทึกสัญญาและสร้างลิงก์สำหรับส่งให้ลูกค้าเรียบร้อย!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
-                    💾 บันทึกและสร้างลิงก์ส่งให้ลูกค้า
+                <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
+                    🖨️ พิมพ์สัญญา / บันทึก PDF
+                </button>
+                <button onclick="alert('บันทึกสัญญาและส่งลิงก์ให้ลูกค้าเรียบร้อย!')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm shadow transition">
+                    💾 บันทึกและส่งลิงก์ให้ลูกค้า
                 </button>
             </div>
         </section>
@@ -297,31 +329,36 @@
 
     </main>
 
-    <!-- Modal พรีวิวสัญญาเต็มจอ (เพิ่มรายละเอียดเงื่อนไขครบถ้วน) -->
+    <!-- Modal พรีวิวสัญญาเต็มจอ -->
     <div id="contract-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl border max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-bold text-lg text-slate-900">📄 พรีวิวร่างสัญญาผ่อนชำระเบี้ยประกันภัย</h3>
+                <h3 class="font-bold text-lg text-slate-900">📄 พรีวิวสัญญาขอแบ่งชำระค่าเบี้ยประกัน</h3>
                 <button onclick="closeContractModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
             </div>
-            <div class="bg-slate-50 p-4 rounded-xl border text-xs space-y-2 font-mono leading-relaxed">
-                <p class="text-center font-bold text-sm text-blue-900 mb-3">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์<br><span class="text-[11px] font-normal text-slate-600">getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</span></p>
-                <p><strong>เลขที่สัญญา:</strong> GS-2026-001</p>
-                <p><strong>ชื่อผู้เอาประกัน:</strong> <span id="m-name" class="text-blue-600">-</span></p>
-                <p><strong>เบอร์โทรศัพท์:</strong> <span id="m-phone" class="text-blue-600">-</span></p>
-                <p><strong>รายการประกัน:</strong> <span id="m-plan" class="text-blue-600">-</span></p>
-                <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="m-net" class="text-blue-600 font-bold">-</span></p>
-                <p><strong>แผนการผ่อนชำระ:</strong> แบ่งจ่าย <span id="m-months" class="text-blue-600 font-bold">-</span> งวดละ <span id="m-per-month" class="text-amber-700 font-bold">-</span></p>
-                <div class="pt-2 border-t text-[11px] text-slate-600 space-y-1">
-                    <p class="font-semibold text-slate-800">📌 เงื่อนไขและข้อกำหนดสัญญา:</p>
-                    <p>1. ผู้เอาประกันตกลงผ่อนชำระเบี้ยประกันตามงวดกำหนด หากผิดนัดชำระ สัญญาอาจถูกระงับความคุ้มครองตามเงื่อนไขบริษัทประกัน</p>
-                    <p>2. ความคุ้มครองมีผลสมบูรณ์เมื่อชำระเงินงวดแรกเรียบร้อยแล้ว</p>
-                    <p>3. ออกโดยบริการออนไลน์ getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</p>
+            
+            <div id="printable-contract" class="bg-white p-6 rounded-xl border space-y-4 text-xs font-mono">
+                <div class="text-right text-[11px] text-slate-500">เขียนวันที่: 24 ตุลาคม 2569</div>
+                <h4 class="text-center font-bold text-sm text-slate-900 underline">สัญญาขอแบ่งชำระค่าเบี้ยประกัน</h4>
+                <p class="leading-relaxed">
+                    ข้าพเจ้า <span id="m-name" class="font-bold text-blue-900">[ชื่อ]</span> เลขบัตรประชาชน <span id="m-idcard" class="font-bold text-blue-900">[เลขบัตร]</span> ที่อยู่ <span id="m-address" class="font-bold text-blue-900">[ที่อยู่]</span> ผู้ซื้อประกันภัยรถยนต์ของบริษัท <span id="m-plan" class="font-bold text-blue-900">[ประกัน]</span> ลงวันที่คุ้มครอง <strong>2/11/69</strong> โดยซื้อผ่าน <strong>นายธัชกร ธราธรชนะกุล</strong> ผู้ขาย ผู้ซื้อมีความประสงค์ขอแบ่งชำระ <span id="m-months" class="font-bold">3 งวด</span> รวมยอดแบ่งชำระ <span id="m-base" class="font-bold">0 บาท</span> หักส่วนลด เหลือ <span id="m-net" class="font-bold text-blue-900">0 บาท</span>
+                </p>
+                <div id="m-schedule-box" class="bg-slate-50 p-3 rounded border space-y-1">
+                    <!-- ตารางงวดผ่อนใน Modal -->
+                </div>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                    <strong>เงื่อนไขหลัก:</strong> ผู้ซื้อต้องส่งค่างวดให้ตรงกำหนด หากล่าช้าปรับงวดละ 200 บาท / ผิดนัด 2 งวดติดต่อกันยินดีให้บอกเลิกสัญญา / ระหว่างผ่อนถือสำเนากรมธรรม์ไว้เป็นหลักฐาน
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-6 border-t text-center">
+                    <div>ลงชื่อ ................................................. ผู้ซื้อ<br>(<span id="m-sign-name">[ชื่อ]</span>)</div>
+                    <div>ลงชื่อ ................................................. ผู้ขาย<br>(นายธัชกร ธราธรชนะกุล)</div>
                 </div>
             </div>
+
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeContractModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium px-4 py-2 rounded-lg text-sm">ปิดหน้าต่าง</button>
-                <button onclick="alert('คัดลอกลิงก์หรือส่งสัญญาให้ลูกค้าเรียบร้อย!'); closeContractModal();" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-sm">คัดลอก/ส่งลิงก์ให้ลูกค้า</button>
+                <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-sm">พิมพ์ / บันทึก PDF</button>
+                <button onclick="alert('คัดลอกลิงก์หรือส่งสัญญาให้ลูกค้าเรียบร้อย!'); closeContractModal();" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2 rounded-lg text-sm">ส่งลิงก์ให้ลูกค้า</button>
             </div>
         </div>
     </div>
@@ -366,7 +403,6 @@
             }
         }
 
-        // ฟังก์ชันพรีวิวไฟล์เดี่ยว (รองรับทั้งรูปภาพและ PDF)
         function previewFile(input, previewId) {
             const container = document.getElementById(previewId);
             container.innerHTML = '';
@@ -456,7 +492,6 @@
             const monthsSelect = document.getElementById('installment-months');
             const noteEl = document.getElementById('installment-note');
 
-            // คำนวณหักส่วนลดเป็น %
             let discountAmount = base * (discountPercent / 100);
             let net = base - discountAmount;
             if (net < 0) net = 0;
@@ -465,7 +500,6 @@
 
             let currentMonthVal = parseInt(monthsSelect.value);
             
-            // เงื่อนไข: ยอดสุทธิต่ำกว่า 10,000 บาท ผ่อนได้ไม่เกิน 6 งวด
             for (let i = 0; i < monthsSelect.options.length; i++) {
                 let optVal = parseInt(monthsSelect.options[i].value);
                 if (net < 10000 && optVal > 6) {
@@ -491,33 +525,57 @@
             let perMonth = net / months;
             document.getElementById('per-month-price').value = perMonth.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' บาท / งวด (จำนวน ' + months + ' งวด)';
 
-            updateContractText();
+            updateContractUI();
         }
 
-        function updateContractText() {
-            const name = document.getElementById('cust-name').value || '[โปรดระบุชื่อลูกค้า]';
-            const phone = document.getElementById('cust-phone').value || '[โปรดระบุเบอร์โทร]';
-            const plan = document.getElementById('selected-plan').value || '-';
-            const net = document.getElementById('net-price').value || '0 บาท';
-            const months = document.getElementById('installment-months').value || '1';
-            const perMonth = document.getElementById('per-month-price').value || '0 บาท';
+        function updateContractUI() {
+            const name = document.getElementById('cust-name').value || '[ชื่อ-นามสกุลลูกค้า]';
+            const idcard = document.getElementById('cust-idcard').value || '[เลขบัตรประชาชน]';
+            const address = document.getElementById('cust-address').value || '[ที่อยู่ลูกค้า]';
+            const plan = document.getElementById('selected-plan').value || '[บริษัทประกัน]';
+            const base = parseFloat(document.getElementById('base-price').value) || 0;
+            const netStr = document.getElementById('net-price').value || '0 บาท';
+            const months = parseInt(document.getElementById('installment-months').value) || 1;
+            const perMonth = netStr !== '0' ? (parseFloat(netStr.replace(/,/g, '')) / months) : 0;
 
-            document.getElementById('c-name').textContent = name;
-            document.getElementById('c-phone').textContent = phone;
-            document.getElementById('c-plan').textContent = plan;
-            document.getElementById('c-net').textContent = net;
-            document.getElementById('c-months').textContent = months + ' งวด';
-            document.getElementById('c-per-month').textContent = perMonth;
+            // อัปเดตข้อความในสัญญาหลัก
+            document.getElementById('s-name').textContent = name;
+            document.getElementById('s-idcard').textContent = idcard;
+            document.getElementById('s-address').textContent = address;
+            document.getElementById('s-plan').textContent = plan;
+            document.getElementById('s-months-text').textContent = months + ' งวด';
+            document.getElementById('s-base').textContent = base.toLocaleString() + ' บาท';
+            document.getElementById('s-net').textContent = netStr;
+            document.getElementById('s-sign-name').textContent = name;
+
+            // สร้างตารางงวดผ่อน
+            let scheduleHTML = '';
+            let totalNet = parseFloat(netStr.replace(/,/g, '')) || 0;
+            let firstMonth = Math.round(totalNet / months);
+            let otherMonth = Math.round((totalNet - firstMonth) / (months - 1)) || firstMonth;
+
+            if (months === 1) {
+                scheduleHTML += `<p>• ชำระยอดเต็มจำนวน จำนวน <strong>${totalNet.toLocaleString()}</strong> บาท</p>`;
+            } else {
+                scheduleHTML += `<p>• ชำระงวดแรก วันที่กำหนด จำนวน <strong>${firstMonth.toLocaleString()}</strong> บาท</p>`;
+                for (let i = 2; i <= months; i++) {
+                    scheduleHTML += `<p>• งวดที่ ${i} งวดละ <strong>${otherMonth.toLocaleString()}</strong> บาท</p>`;
+                }
+            }
+            document.getElementById('installment-schedule-box').innerHTML = scheduleHTML;
         }
 
         function previewContractModal() {
-            updateContractText();
-            document.getElementById('m-name').textContent = document.getElementById('c-name').textContent;
-            document.getElementById('m-phone').textContent = document.getElementById('c-phone').textContent;
-            document.getElementById('m-plan').textContent = document.getElementById('c-plan').textContent;
-            document.getElementById('m-net').textContent = document.getElementById('c-net').textContent;
-            document.getElementById('m-months').textContent = document.getElementById('c-months').textContent;
-            document.getElementById('m-per-month').textContent = document.getElementById('c-per-month').textContent;
+            updateContractUI();
+            document.getElementById('m-name').textContent = document.getElementById('s-name').textContent;
+            document.getElementById('m-idcard').textContent = document.getElementById('s-idcard').textContent;
+            document.getElementById('m-address').textContent = document.getElementById('s-address').textContent;
+            document.getElementById('m-plan').textContent = document.getElementById('s-plan').textContent;
+            document.getElementById('m-months').textContent = document.getElementById('s-months-text').textContent;
+            document.getElementById('m-base').textContent = document.getElementById('s-base').textContent;
+            document.getElementById('m-net').textContent = document.getElementById('s-net').textContent;
+            document.getElementById('m-sign-name').textContent = document.getElementById('s-sign-name').textContent;
+            document.getElementById('m-schedule-box').innerHTML = document.getElementById('installment-schedule-box').innerHTML;
             
             document.getElementById('contract-modal').classList.remove('hidden');
         }
