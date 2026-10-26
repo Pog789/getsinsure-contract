@@ -478,12 +478,10 @@
             alert('บันทึกข้อมูลรถและภาพถ่าย ' + accumulatedPhotos.length + ' ภาพเรียบร้อย! แสดงรายการเบี้ยประกันด้านล่างเพื่อให้ลูกค้าเลือกได้เลยครับ');
         }
 
-        // ฟังก์ชันเลือกแพ็กเกจ พร้อมเปลี่ยนสถานะปุ่มและสีการ์ดให้เห็นชัดเจนว่าเลือกอันไหน
         function selectPackage(cardId, planName, price) {
             document.getElementById('selected-plan').value = planName;
             document.getElementById('base-price').value = price;
 
-            // รีเซ็ตการ์ดทั้งหมดให้เป็นปกติ
             for (let i = 1; i <= 3; i++) {
                 document.getElementById('card-' + i).className = 'bg-white p-5 rounded-xl shadow border border-slate-200 flex flex-col justify-between transition';
                 const btn = document.getElementById('btn-pkg-' + i);
@@ -491,7 +489,6 @@
                 btn.innerHTML = '👉 เลือกแผนนี้ / ไปหน้าซื้อผ่อน';
             }
 
-            // เน้นการ์ดที่ถูกเลือก
             document.getElementById('card-' + cardId).className = 'bg-emerald-50 p-5 rounded-xl shadow-lg border-2 border-emerald-500 flex flex-col justify-between transition transform scale-102';
             const selectedBtn = document.getElementById('btn-pkg-' + cardId);
             selectedBtn.className = 'mt-6 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-lg';
@@ -536,9 +533,6 @@
             } else {
                 noteEl.textContent = "";
             }
-
-            let months = currentMonthVal;
-            let perMonth = net / months;
 
             updateContractUI();
         }
