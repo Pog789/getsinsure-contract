@@ -100,12 +100,12 @@
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">1. สำเนาบัตรประชาชน</label>
                             <input type="file" id="home-id-card" accept="image/*,.pdf" onchange="previewFile(this, 'id-card-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="id-card-preview" class="text-xs text-amber-200 mt-1"></div>
+                            <div id="id-card-preview" class="mt-2"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">2. สำเนาทะเบียนรถ</label>
                             <input type="file" id="home-car-reg" accept="image/*,.pdf" onchange="previewFile(this, 'car-reg-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="car-reg-preview" class="text-xs text-amber-200 mt-1"></div>
+                            <div id="car-reg-preview" class="mt-2"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">3. ภาพถ่ายรถยนต์ (สะสมได้สูงสุด 9 ภาพ)</label>
@@ -354,7 +354,7 @@
             }
         }
 
-        // ฟังก์ชันพรีวิวไฟล์เดี่ยว (บัตรประชาชน / ทะเบียนรถ)
+        // ฟังก์ชันพรีวิวไฟล์เดี่ยว (บัตรประชาชน / ทะเบียนรถ) ให้โชว์ภาพหรือชื่อไฟล์ถูกต้อง
         function previewFile(input, previewId) {
             const container = document.getElementById(previewId);
             container.innerHTML = '';
@@ -365,12 +365,12 @@
                     reader.onload = function(e) {
                         const img = document.createElement('img');
                         img.src = e.target.result;
-                        img.className = 'w-16 h-16 object-cover rounded mt-1 border border-amber-300';
+                        img.className = 'w-16 h-16 object-cover rounded mt-1 border border-amber-300 shadow';
                         container.appendChild(img);
                     }
                     reader.readAsDataURL(file);
                 } else {
-                    container.innerHTML = '<span class="text-emerald-300">📎 ' + file.name + '</span>';
+                    container.innerHTML = '<span class="text-emerald-300 text-xs">📎 ' + file.name + '</span>';
                 }
             }
         }
