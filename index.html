@@ -100,12 +100,12 @@
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">1. สำเนาบัตรประชาชน</label>
                             <input type="file" id="home-id-card" accept="image/*,.pdf" onchange="previewFile(this, 'id-card-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="id-card-preview" class="mt-2"></div>
+                            <div id="id-card-preview" class="mt-2 text-xs text-amber-200"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">2. สำเนาทะเบียนรถ</label>
                             <input type="file" id="home-car-reg" accept="image/*,.pdf" onchange="previewFile(this, 'car-reg-preview')" class="w-full text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-900 hover:file:bg-amber-400">
-                            <div id="car-reg-preview" class="mt-2"></div>
+                            <div id="car-reg-preview" class="mt-2 text-xs text-amber-200"></div>
                         </div>
                         <div class="bg-white/10 p-3 rounded-lg space-y-2">
                             <label class="block text-xs text-slate-200">3. ภาพถ่ายรถยนต์ (สะสมได้สูงสุด 9 ภาพ)</label>
@@ -231,7 +231,7 @@
                 </div>
             </div>
 
-            <!-- แสดงร่างสัญญาผ่อนชำระ -->
+            <!-- แสดงร่างสัญญาผ่อนชำระ พร้อมรายละเอียดเงื่อนไข -->
             <div class="bg-slate-50 border border-slate-300 p-5 rounded-xl space-y-3">
                 <h3 class="font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
                     <span>📄 ร่างสัญญาผ่อนชำระเบี้ยประกันภัย (พรีวิวก่อนส่งให้ลูกค้า)</span>
@@ -239,13 +239,19 @@
                         🔍 ขยายดูตัวอย่างสัญญาเต็มจอ
                     </button>
                 </h3>
-                <div id="contract-box" class="text-xs text-slate-700 space-y-2 font-mono bg-white p-4 rounded-lg border">
-                    <p><strong>สัญญาเลขที่:</strong> GS-2026-001</p>
+                <div id="contract-box" class="text-xs text-slate-700 space-y-2 font-mono bg-white p-4 rounded-lg border leading-relaxed">
+                    <p class="font-bold text-blue-900">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์ (getsinsure)</p>
+                    <p><strong>เลขที่สัญญา:</strong> GS-2026-001</p>
                     <p><strong>ผู้เอาประกันภัย:</strong> <span id="c-name" class="text-blue-600">[โปรดระบุชื่อลูกค้า]</span> | <strong>เบอร์โทร:</strong> <span id="c-phone" class="text-blue-600">[โปรดระบุเบอร์โทร]</span></p>
                     <p><strong>รายการประกัน:</strong> <span id="c-plan" class="text-blue-600">-</span></p>
                     <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="c-net" class="text-blue-600 font-bold">0 บาท</span></p>
                     <p><strong>เงื่อนไขการชำระ:</strong> แบ่งชำระจำนวน <span id="c-months" class="text-blue-600 font-bold">1 งวด</span> งวดละ <span id="c-per-month" class="text-amber-700 font-bold">0 บาท</span></p>
-                    <p class="text-slate-500 text-[11px] pt-2 border-t">ออกโดยบริการออนไลน์ getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</p>
+                    <div class="pt-2 border-t text-[11px] text-slate-600 space-y-1">
+                        <p class="font-semibold text-slate-800">📌 เงื่อนไขและข้อกำหนดสัญญา:</p>
+                        <p>1. ผู้เอาประกันตกลงผ่อนชำระเบี้ยประกันตามงวดกำหนด หากผิดนัดชำระเกินกำหนด สัญญาอาจถูกระงับความคุ้มครองตามเงื่อนไขบริษัทประกัน</p>
+                        <p>2. การคุ้มครองจะมีผลสมบูรณ์เมื่อได้รับการยืนยันการชำระเงินงวดแรกเรียบร้อยแล้ว</p>
+                        <p>3. ออกโดยบริการออนไลน์ getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</p>
+                    </div>
                 </div>
             </div>
 
@@ -293,19 +299,24 @@
 
     <!-- Modal พรีวิวสัญญาเต็มจอ -->
     <div id="contract-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl border max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="font-bold text-lg text-slate-900">📄 พรีวิวร่างสัญญาผ่อนชำระเบี้ยประกันภัย</h3>
                 <button onclick="closeContractModal()" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
             </div>
-            <div class="bg-slate-50 p-4 rounded-xl border text-sm space-y-2 font-mono">
-                <p class="text-center font-bold text-base text-blue-900 mb-3">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์<br><span class="text-xs font-normal text-slate-600">getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</span></p>
+            <div class="bg-slate-50 p-4 rounded-xl border text-xs space-y-2 font-mono leading-relaxed">
+                <p class="text-center font-bold text-sm text-blue-900 mb-3">สัญญาการผ่อนชำระเบี้ยประกันภัยรถยนต์<br><span class="text-[11px] font-normal text-slate-600">getsinsure นายหน้าประกันภัยรถยนต์ โดย คุณธัชกร ธราธรชนะกุล</span></p>
                 <p><strong>เลขที่สัญญา:</strong> GS-2026-001</p>
                 <p><strong>ชื่อผู้เอาประกัน:</strong> <span id="m-name" class="text-blue-600">-</span></p>
                 <p><strong>เบอร์โทรศัพท์:</strong> <span id="m-phone" class="text-blue-600">-</span></p>
                 <p><strong>รายการประกัน:</strong> <span id="m-plan" class="text-blue-600">-</span></p>
                 <p><strong>ยอดสุทธิหลังหักส่วนลด:</strong> <span id="m-net" class="text-blue-600 font-bold">-</span></p>
                 <p><strong>แผนการผ่อนชำระ:</strong> แบ่งจ่าย <span id="m-months" class="text-blue-600 font-bold">-</span> งวดละ <span id="m-per-month" class="text-amber-700 font-bold">-</span></p>
+                <div class="pt-2 border-t text-[11px] text-slate-600 space-y-1">
+                    <p class="font-semibold text-slate-800">📌 เงื่อนไขและข้อกำหนดสัญญา:</p>
+                    <p>1. ผู้เอาประกันตกลงผ่อนชำระเบี้ยประกันตามงวดกำหนด หากผิดนัดชำระ สัญญาอาจถูกระงับความคุ้มครองตามเงื่อนไขบริษัทประกัน</p>
+                    <p>2. ความคุ้มครองมีผลสมบูรณ์เมื่อชำระเงินงวดแรกเรียบร้อยแล้ว</p>
+                </div>
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeContractModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-medium px-4 py-2 rounded-lg text-sm">ปิดหน้าต่าง</button>
@@ -354,7 +365,7 @@
             }
         }
 
-        // ฟังก์ชันพรีวิวไฟล์เดี่ยว (บัตรประชาชน / ทะเบียนรถ) ให้โชว์ภาพหรือชื่อไฟล์ถูกต้อง
+        // ฟังก์ชันพรีวิวไฟล์เดี่ยว (รองรับทั้งรูปภาพและ PDF)
         function previewFile(input, previewId) {
             const container = document.getElementById(previewId);
             container.innerHTML = '';
@@ -370,7 +381,7 @@
                     }
                     reader.readAsDataURL(file);
                 } else {
-                    container.innerHTML = '<span class="text-emerald-300 text-xs">📎 ' + file.name + '</span>';
+                    container.innerHTML = '<span class="text-emerald-300 text-xs">📄 [ไฟล์ PDF] ' + file.name + '</span>';
                 }
             }
         }
@@ -498,7 +509,6 @@
             document.getElementById('c-per-month').textContent = perMonth;
         }
 
-        // ฟังก์ชันเปิด-ปิด Modal พรีวิวสัญญาเต็มจอ
         function previewContractModal() {
             updateContractText();
             document.getElementById('m-name').textContent = document.getElementById('c-name').textContent;
